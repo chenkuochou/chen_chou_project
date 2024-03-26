@@ -8,9 +8,11 @@ environment:
 
 dependencies:
   carousel_slider: ^4.2.1
+  dots_indicator: ^3.0.0
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:

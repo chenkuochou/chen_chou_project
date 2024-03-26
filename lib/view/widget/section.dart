@@ -5,10 +5,27 @@ import 'package:chen_chou_project/data/model/enum/project_type.dart';
 import 'package:chen_chou_project/data/model/enum/tech_stack.dart';
 import 'package:chen_chou_project/data/model/project_model.dart';
 import 'package:chen_chou_project/data/source/projects.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class Section extends StatelessWidget {
+class Section extends StatefulWidget {
   const Section({super.key});
+
+  @override
+  State<Section> createState() => _SectionState();
+}
+
+class _SectionState extends State<Section> {
+  late CarouselController controller;
+  int currentIndex = 0;
+
+  @override
+  void initState() {
+    controller = CarouselController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     const bool isImgLeft = true;
@@ -16,54 +33,63 @@ class Section extends StatelessWidget {
     final ProjectModel projectModel = projects[0];
 
     final String title = projectModel.name;
-    final List<String> imageNames =
+    final List<String> images =
         projectModel.imageNames.map((e) => 'assets/img/$e.png').toList();
     final String subtitle = projectModel.subtitle;
     final String description = projectModel.description;
     final ProjectType projectType = projectModel.type;
     final List<TechStack> techStack = projectModel.techStack;
     final TextStyle fontStyle = projectModel.textStyle;
+    final String? demoUrl = projectModel.demoUrl;
 
     final double height = MediaQuery.of(context).size.height;
 
-    Widget img() => CarouselSlider(
-          options: CarouselOptions(
-            height: height,
-            viewportFraction: 1.0,
-            enlargeCenterPage: false,
-            
-          ),
-          items: imageNames
-              .map((item) => Container(
-                    child: Center(
-                        child: Image.network(
-                      item,
-                      fit: BoxFit.cover,
-                      height: height,
-                    )),
-                  ))
-              .toList(),
+    Widget img() => Stack(
+          alignment: Alignment.center,
+          children: [
+            /// photo slider
+            CarouselSlider(
+              carouselController: controller,
+              options: CarouselOptions(
+                  height: height,
+                  viewportFraction: 1.0,
+                  autoPlay: true,
+                  // autoPlayInterval: const Duration(seconds: 5),
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  }),
+              items: images
+                  .map((item) => Center(
+                          child: Image.network(
+                        item,
+                        fit: BoxFit.cover,
+                        height: height,
+                      )))
+                  .toList(),
+            ),
+
+            /// Dot navigator
+            Positioned(
+              bottom: 20,
+              child: DotsIndicator(
+                dotsCount: images.length,
+                position: currentIndex,
+                onTap: (position) => controller.animateToPage(position),
+                decorator: DotsDecorator(
+                  color: MyPalette.white,
+                  activeColor: MyPalette.yellow,
+                  size: const Size.square(15),
+                  activeSize: const Size(30, 15),
+                  activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+          ],
         );
-    // CarouselSlider.builder(
-    //     itemCount: 2,
-    //     options: CarouselOptions(
-    //       height: 800,
-    //       initialPage: 0,
-    //       // enlargeCenterPage: true,
-    //       enableInfiniteScroll: false,
-    //       scrollDirection: Axis.horizontal,
-    //     ),
-    //     itemBuilder: (context, index, realIndex) {
-    //       return
-    //       Container(
-    //         decoration: BoxDecoration(
-    //           image: DecorationImage(
-    //             image: AssetImage(imageNames[index]),
-    //             fit: BoxFit.cover,
-    //           ),
-    //         ),
-    //       );
-    //     });
 
     Widget feature() {
       Container tag(String text, Color bgColor, [bool isOutlined = false]) =>
@@ -91,28 +117,31 @@ class Section extends StatelessWidget {
         padding: const EdgeInsets.all(50),
         child: Column(
           children: [
-            // Title
+            /// Title
             Flexible(
               flex: 2,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Title
+                  /// Title
                   myText(title,
                       style: fontStyle.copyWith(
                         color: MyPalette.black,
                         fontSize: 40,
                         fontWeight: FontWeight.w800,
                       )),
-                  // Subtitle
+
+                  /// Subtitle
                   myText(subtitle, style: fontStyle),
                   const SizedBox(height: 40),
-                  // Type tag
+
+                  /// Type tag
                   tag(projectType.displayName, projectType.bgColor, true),
                 ],
               ),
             ),
-            // Description & stacks
+
+            /// Description & stacks
             Flexible(
               flex: 5,
               child: Center(
@@ -124,8 +153,12 @@ class Section extends StatelessWidget {
                       style: fontStyle,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        myText('Build with stacks:', size: 12),
+                        myText('Build with stacks:',
+                            style: fontStyle.copyWith(
+                              fontSize: 12,
+                            )),
                         const SizedBox(height: 10),
                         Wrap(
                           spacing: 5,
@@ -137,15 +170,19 @@ class Section extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Demo
-                    FilledButton(
-                      onPressed: () {},
-                      style: const ButtonStyle().copyWith(
-                          elevation: const MaterialStatePropertyAll(5),
-                          backgroundColor:
-                              MaterialStateProperty.all(MyPalette.black)),
-                      child: myText('Demo', color: MyPalette.white),
-                    )
+
+                    /// Demo
+                    demoUrl != null
+                        ? FilledButton(
+                            onPressed: () => launchUrl(Uri.parse(demoUrl)),
+                            style: FilledButton.styleFrom(
+                              elevation: 5,
+                              backgroundColor: MyPalette.black,
+                              textStyle: fontStyle,
+                            ),
+                            child: myText('Demo', color: MyPalette.white),
+                          )
+                        : const SizedBox.shrink(),
                   ],
                 ),
               ),
