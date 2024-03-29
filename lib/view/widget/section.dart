@@ -33,8 +33,11 @@ class _SectionState extends State<Section> {
     final ProjectModel projectModel = projects[0];
 
     final String title = projectModel.name;
-    final List<String> images =
-        projectModel.imageNames.map((e) => 'assets/img/$e.png').toList();
+    List<String> images = [];
+    for (var i = 1; i < projectModel.imageCount + 1; i++) {
+      images.add('assets/img/${title.toLowerCase()}$i-portrait.png');
+    }
+
     final String subtitle = projectModel.subtitle;
     final String description = projectModel.description;
     final ProjectType projectType = projectModel.type;
@@ -51,8 +54,8 @@ class _SectionState extends State<Section> {
             CarouselSlider(
               carouselController: controller,
               options: CarouselOptions(
-                  height: height,
-                  viewportFraction: 1.0,
+                  height: height - 75,
+                  viewportFraction: 1,
                   autoPlay: true,
                   // autoPlayInterval: const Duration(seconds: 5),
                   onPageChanged: (index, _) {
@@ -114,10 +117,9 @@ class _SectionState extends State<Section> {
           );
 
       return Padding(
-        padding: const EdgeInsets.all(50),
+        padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 50),
         child: Column(
           children: [
-            /// Title
             Flexible(
               flex: 2,
               child: Column(
@@ -127,8 +129,8 @@ class _SectionState extends State<Section> {
                   myText(title,
                       style: fontStyle.copyWith(
                         color: MyPalette.black,
-                        fontSize: 40,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 45,
+                        fontWeight: FontWeight.w900,
                       )),
 
                   /// Subtitle
@@ -140,40 +142,39 @@ class _SectionState extends State<Section> {
                 ],
               ),
             ),
-
-            /// Description & stacks
             Flexible(
               flex: 5,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    myText(
-                      description,
-                      style: fontStyle,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        myText('Build with stacks:',
-                            style: fontStyle.copyWith(
-                              fontSize: 12,
-                            )),
-                        const SizedBox(height: 10),
-                        Wrap(
-                          spacing: 5,
-                          runSpacing: 2,
-                          children: [
-                            for (TechStack tech in techStack)
-                              tag(tech.displayName, tech.displayColor),
-                          ],
-                        ),
-                      ],
-                    ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  /// Description
+                  myText(description, style: fontStyle, isJustify: true),
 
-                    /// Demo
-                    demoUrl != null
-                        ? FilledButton(
+                  /// Stacks
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      myText('Build with:',
+                          style: fontStyle.copyWith(
+                            fontSize: 12,
+                          )),
+                      const SizedBox(height: 10),
+                      Wrap(
+                        spacing: 5,
+                        runSpacing: 2,
+                        children: [
+                          for (TechStack tech in techStack)
+                            tag(tech.displayName, tech.displayColor),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  /// Demo
+                  demoUrl != null
+                      ? Center(
+                          child: FilledButton(
                             onPressed: () => launchUrl(Uri.parse(demoUrl)),
                             style: FilledButton.styleFrom(
                               elevation: 5,
@@ -181,10 +182,10 @@ class _SectionState extends State<Section> {
                               textStyle: fontStyle,
                             ),
                             child: myText('Demo', color: MyPalette.white),
-                          )
-                        : const SizedBox.shrink(),
-                  ],
-                ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
               ),
             ),
           ],

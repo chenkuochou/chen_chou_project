@@ -2,19 +2,12 @@ import 'package:chen_chou_project/common/constant/my_palette.dart';
 import 'package:flutter/material.dart';
 
 enum ProjectType {
-  proofOfConcept,
-  inProgress,
-  production;
+  proofOfConcept('PROOF OF CONCEPT', MyPalette.grey),
+  inProgress('In Progress', MyPalette.green),
+  production('Production', MyPalette.blue);
 
-  String get displayName => switch (this) {
-        ProjectType.proofOfConcept => 'PROOF OF CONCEPT',
-        ProjectType.inProgress => 'In Progress',
-        ProjectType.production => 'Production',
-      };
+  final String displayName;
+  final Color bgColor;
 
-  Color get bgColor => switch (this) {
-        ProjectType.proofOfConcept => MyPalette.grey,
-        ProjectType.inProgress => MyPalette.green,
-        ProjectType.production => MyPalette.blue,
-      };
+  const ProjectType(this.displayName, this.bgColor);
 }

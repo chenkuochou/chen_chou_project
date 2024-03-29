@@ -9,12 +9,12 @@ List<ProjectModel> projects = [
   ProjectModel(
     name: 'Rustland',
     subtitle: 'A pokemon game with blockchain',
-    imageNames: const ['rustland1', 'sample'],
+    imageCount: 4,
     type: ProjectType.proofOfConcept,
     description: '''
 Random sentences can also spur creativity in other types of projects being done. If you are trying to come up with a new concept, a new idea or a new product, a random sentence may help you find unique qualities you may not have considered. 
-Trying to incorporate the sentence into your project can help you look at it in different and unexpected ways than you would normally on your own.
 ''',
+    features: const ['1', '2'],
     techStack: const [
       TechStack.fireStore,
       TechStack.geolocator,
@@ -23,10 +23,9 @@ Trying to incorporate the sentence into your project can help you look at it in 
       TechStack.geolocator,
     ],
     textStyle: GoogleFonts.poppins(
-      textStyle: const TextStyle(
-        color: MyPalette.grey,
-      ),
-    ),
+        textStyle: const TextStyle(
+      color: MyPalette.grey,
+    )),
     demoUrl: '',
   ),
 ];

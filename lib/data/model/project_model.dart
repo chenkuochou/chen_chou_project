@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 class ProjectModel {
   final String name;
   final String subtitle;
-  final List<String> imageNames;
+  final int imageCount;
   final ProjectType type;
   final String description;
+  final List<String> features;
   final List<TechStack> techStack;
   final TextStyle textStyle;
   final String? demoUrl;
@@ -16,9 +17,10 @@ class ProjectModel {
   const ProjectModel({
     required this.name,
     required this.subtitle,
-    required this.imageNames,
+    required this.imageCount,
     required this.type,
     required this.description,
+    required this.features,
     required this.techStack,
     required this.textStyle,
     this.demoUrl,

@@ -7,9 +7,11 @@ Text myText(
   double? size,
   bool? bold,
   TextStyle? style,
+  bool? isJustify =false,
 }) =>
     Text(
       text,
+      textAlign: isJustify == true? TextAlign.justify:null,
       style: style ??
           TextStyle(
             color: color,

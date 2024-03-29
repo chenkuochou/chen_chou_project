@@ -13,8 +13,7 @@ class HomePage extends StatelessWidget {
       'Mother Earth': 1,
       'whisper': 2,
       'Baseball': 3,
-      'Lucent': 4,
-      'Footer': 5,
+      'Footer': 4,
     }['Rustland']!;
 
     return Scaffold(
