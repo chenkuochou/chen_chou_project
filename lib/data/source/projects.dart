@@ -7,18 +7,25 @@ List<ProjectModel> projects = [
   /// Rustland
   ProjectModel(
     name: 'Rustland',
-    subtitle: 'A pokemon game with blockchain',
+    subtitle: 'A Real-world Metaverse Game',
     imageMeta: const {'rustland': 4},
     type: ProjectType.proofOfConcept,
     description: '''
-Random sentences can also spur creativity in other types of projects being done. If you are trying to come up with a new concept, a new idea or a new product, a random sentence may help you find unique qualities you may not have considered. 
+A groundbreaking pokemon-style metaverse game with blockchain built in Flutter!
+
+Collecting a vast array of common and rare items hidden in real-world locations of your phone's GPS.
+
+Crafting your collected items to create unique resources to construct stunning architects (which considered in-game economy allowing items to be traded and grow its value). Every creation is secured on the blockchain, ensuring true ownership.
 ''',
     techStack: const [
-      TechStack.fireStore,
-      TechStack.geolocator,
+      TechStack.firebase,
       TechStack.firebaseAuth,
+      TechStack.fireStore,
+      TechStack.svg,
       TechStack.geolocator,
-      TechStack.geolocator,
+      TechStack.sharedPreferences,
+      TechStack.appleSignIn,
+      TechStack.pixelDesign,
     ],
     textStyle: GoogleFonts.poppins(
         textStyle: const TextStyle(
@@ -35,14 +42,21 @@ Random sentences can also spur creativity in other types of projects being done.
     imageMeta: const {'motherEarth': 9},
     type: ProjectType.production,
     description: '''
-Random sentences can also spur creativity in other types of projects being done. If you are trying to come up with a new concept, a new idea or a new product, a random sentence may help you find unique qualities you may not have considered. 
+Clicker for a Greener Future!
+
+• Tap to choose solutions for real-world environmental
+• Discover the impact of your choices
+• Collect & gather resources
+• Unlock and upgrade eco-friendly technologies
+• Earn badges as you progress
+
+Flutter "Global Gamers Challenge" competition
 ''',
     techStack: const [
-      TechStack.fireStore,
-      TechStack.geolocator,
-      TechStack.firebaseAuth,
-      TechStack.geolocator,
-      TechStack.geolocator,
+      TechStack.confetti,
+      TechStack.riverpod,
+      TechStack.googleFont,
+      TechStack.lottie,
     ],
     textStyle: GoogleFonts.ubuntuMono(
         textStyle: const TextStyle(
@@ -55,42 +69,64 @@ Random sentences can also spur creativity in other types of projects being done.
   /// Whisper
   ProjectModel(
     name: 'Whisper',
-    subtitle: 'A game that teaches you how to rescue our earth',
+    subtitle: 'Chat, flirt, and find meaningful connections hassle-free',
     imageMeta: const {'whisper': 7},
     type: ProjectType.proofOfConcept,
     description: '''
-Random sentences can also spur creativity in other types of projects being done. If you are trying to come up with a new concept, a new idea or a new product, a random sentence may help you find unique qualities you may not have considered. 
-''',
+Whisper goes beyond swiping photos.  We connect you with people who share your passions!
+
+• Nearby connections
+• Hobby matching
+• Career and occupational connection
+• Start chats with customised questions
+• Upload photos that capture your essence
+• Grant friendship based on answers you like, 
+  fostering genuine connections
+
+Find your Spark. Find your friends. Find yourself.''',
     techStack: const [
+      TechStack.firebase,
       TechStack.fireStore,
-      TechStack.geolocator,
       TechStack.firebaseAuth,
       TechStack.geolocator,
-      TechStack.geolocator,
+      TechStack.networkImage,
+      TechStack.googleFont,
+      TechStack.photoView,
+      TechStack.appleSignIn,
     ],
     textStyle: GoogleFonts.poppins(
         textStyle: const TextStyle(
       color: MyPalette.black,
     )),
-    demoUrl: 'https://mother-earth-rescue.netlify.app',
+    demoUrl: 'https://whisper-demo.netlify.app/',
     bgColor: MyPalette.greyWhite,
+    credentials: const ['milesnext@gmail.com', '123456'],
   ),
 
-  /// Baseball
+  /// Baseball Classic
   ProjectModel(
-    name: 'Baseball Classic',
-    subtitle: 'A game that teaches you how to rescue our earth',
+    name: 'Baseball Tapped',
+    subtitle: 'Unique players, unique abilities',
     imageMeta: const {'baseballClassic': 4},
     type: ProjectType.inProgress,
     description: '''
-Random sentences can also spur creativity in other types of projects being done. If you are trying to come up with a new concept, a new idea or a new product, a random sentence may help you find unique qualities you may not have considered. 
+From rookies to legends, each player has a distinctive pixel avatar and special abilities that impact the game.
+
+Players can choose strategies from:
+• Contact for a base hit
+• Go for glory with a power swing
+• Play it safe with a bunt
+• Wait for the perfect pitch
+
+Experience the thrill of the diamond as the game simulates the battle between pitcher and batter, factoring in plate discipline, pitching and batting prowess, fielding plays, errors, and even runner speed!
 ''',
     techStack: const [
-      TechStack.fireStore,
-      TechStack.geolocator,
-      TechStack.firebaseAuth,
-      TechStack.geolocator,
-      TechStack.geolocator,
+      TechStack.riverpod,
+      TechStack.sharedPreferences,
+      TechStack.svg,
+      TechStack.networkImage,
+      TechStack.googleFont,
+      TechStack.pixelDesign,
     ],
     textStyle: GoogleFonts.poppins(
         textStyle: const TextStyle(

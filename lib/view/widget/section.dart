@@ -39,6 +39,7 @@ class _SectionState extends State<Section> {
     final String? demoUrl = widget.projectModel.demoUrl;
     final Color bgColor = widget.projectModel.bgColor;
     final bool isDarkTheme = widget.projectModel.isDarkTheme!;
+    final List<String>? credentials = widget.projectModel.credentials;
 
     final double height = MediaQuery.of(context).size.height;
 
@@ -112,7 +113,7 @@ class _SectionState extends State<Section> {
           );
 
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 75, vertical: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -123,14 +124,22 @@ class _SectionState extends State<Section> {
                 children: [
                   /// Title
                   myText(title,
+                      textAlign: TextAlign.center,
                       style: fontStyle.copyWith(
                         color: !isDarkTheme ? MyPalette.black : MyPalette.white,
                         fontSize: 45,
                         fontWeight: FontWeight.w900,
                       )),
+                  const SizedBox(height: 5),
 
                   /// Subtitle
-                  myText(subtitle, style: fontStyle),
+                  Center(
+                    child: myText(subtitle,
+                        textAlign: TextAlign.center,
+                        style: fontStyle.copyWith(
+                          fontStyle: FontStyle.italic,
+                        )),
+                  ),
                   const SizedBox(height: 40),
 
                   /// Type tag
@@ -188,21 +197,36 @@ class _SectionState extends State<Section> {
                   /// Demo
                   demoUrl != null
                       ? Center(
-                          child: FilledButton(
-                            onPressed: () => launchUrl(Uri.parse(demoUrl)),
-                            style: FilledButton.styleFrom(
-                              elevation: !isDarkTheme ? 5 : null,
-                              backgroundColor: !isDarkTheme
-                                  ? MyPalette.black
-                                  : MyPalette.white,
-                              textStyle: fontStyle,
-                            ),
-                            child: myText(
-                              'Demo',
-                              color: !isDarkTheme
-                                  ? MyPalette.white
-                                  : MyPalette.black,
-                            ),
+                          child: Column(
+                            children: [
+                              FilledButton(
+                                onPressed: () => launchUrl(Uri.parse(demoUrl)),
+                                style: FilledButton.styleFrom(
+                                  elevation: !isDarkTheme ? 5 : null,
+                                  backgroundColor: !isDarkTheme
+                                      ? MyPalette.black
+                                      : MyPalette.white,
+                                  textStyle: fontStyle,
+                                ),
+                                child: myText(
+                                  'Demo',
+                                  color: !isDarkTheme
+                                      ? MyPalette.white
+                                      : MyPalette.black,
+                                ),
+                              ),
+                              credentials != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: myText(
+                                          'username: ${credentials[0]}\npassword: ${credentials[1]}',
+                                          textAlign: TextAlign.center,
+                                          style: fontStyle.copyWith(
+                                            fontSize: 11,
+                                          )),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ],
                           ),
                         )
                       : const SizedBox.shrink(),

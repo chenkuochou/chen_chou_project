@@ -9,13 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int currentSection = {
-      'Rustland': 0,
-      'MotherEarth': 1,
-      'Whisper': 2,
-      'Baseball': 3,
-      'Footer': 4,
-    }['Whisper']!;
+    const int currentSection = 0;
 
     return Scaffold(
       backgroundColor: MyPalette.black,
@@ -26,8 +20,7 @@ class HomePage extends StatelessWidget {
             initialPage: currentSection,
           ),
           children: [
-            for (int i = 0; i < projects.length; i++)
-              Section(projects[i]),
+            for (int i = 0; i < projects.length; i++) Section(projects[i]),
             const Footer(),
           ],
         ),
