@@ -39,7 +39,7 @@ class _SectionState extends State<Section> {
     final String? demoUrl = widget.projectModel.demoUrl;
     final Color bgColor = widget.projectModel.bgColor;
     final bool isDarkTheme = widget.projectModel.isDarkTheme!;
-    final List<String>? credentials = widget.projectModel.credentials;
+    final String? demoNotes = widget.projectModel.demoNotes;
 
     final double height = MediaQuery.of(context).size.height;
 
@@ -53,6 +53,7 @@ class _SectionState extends State<Section> {
                   height: height - 75,
                   viewportFraction: 1,
                   autoPlay: true,
+                  enlargeCenterPage: true,
                   // autoPlayInterval: const Duration(seconds: 5),
                   onPageChanged: (index, _) {
                     setState(() {
@@ -61,7 +62,7 @@ class _SectionState extends State<Section> {
                   }),
               items: images
                   .map((item) => Center(
-                          child: Image.network(
+                          child: Image.asset(
                         item,
                         fit: BoxFit.cover,
                         height: height,
@@ -215,11 +216,10 @@ class _SectionState extends State<Section> {
                                       : MyPalette.black,
                                 ),
                               ),
-                              credentials != null
+                              demoNotes != null
                                   ? Padding(
                                       padding: const EdgeInsets.only(top: 10),
-                                      child: myText(
-                                          'username: ${credentials[0]}\npassword: ${credentials[1]}',
+                                      child: myText(demoNotes,
                                           textAlign: TextAlign.center,
                                           style: fontStyle.copyWith(
                                             fontSize: 11,

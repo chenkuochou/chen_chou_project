@@ -6,34 +6,34 @@ import 'package:google_fonts/google_fonts.dart';
 List<ProjectModel> projects = [
   /// Rustland
   ProjectModel(
-    name: 'Rustland',
-    subtitle: 'A Real-world Metaverse Game',
-    imageMeta: const {'rustland': 4},
-    type: ProjectType.proofOfConcept,
-    description: '''
+      name: 'Rustland',
+      subtitle: 'A Real-world Metaverse Game',
+      imageMeta: const {'rustland': 4},
+      type: ProjectType.proofOfConcept,
+      description: '''
 A groundbreaking pokemon-style metaverse game with blockchain built in Flutter!
 
 Collecting a vast array of common and rare items hidden in real-world locations of your phone's GPS.
 
 Crafting your collected items to create unique resources to construct stunning architects (which considered in-game economy allowing items to be traded and grow its value). Every creation is secured on the blockchain, ensuring true ownership.
 ''',
-    techStack: const [
-      TechStack.firebase,
-      TechStack.firebaseAuth,
-      TechStack.fireStore,
-      TechStack.svg,
-      TechStack.geolocator,
-      TechStack.sharedPreferences,
-      TechStack.appleSignIn,
-      TechStack.pixelDesign,
-    ],
-    textStyle: GoogleFonts.poppins(
-        textStyle: const TextStyle(
-      color: MyPalette.grey,
-    )),
-    demoUrl: 'https://rustlanddemo.netlify.app/',
-    bgColor: MyPalette.white,
-  ),
+      techStack: const [
+        TechStack.firebase,
+        TechStack.firebaseAuth,
+        TechStack.fireStore,
+        TechStack.svg,
+        TechStack.geolocator,
+        TechStack.sharedPreferences,
+        TechStack.appleSignIn,
+        TechStack.pixelDesign,
+      ],
+      textStyle: GoogleFonts.poppins(
+          textStyle: const TextStyle(
+        color: MyPalette.grey,
+      )),
+      demoUrl: 'https://rustlanddemo.netlify.app/',
+      bgColor: MyPalette.white,
+      demoNotes: 'Please enable location to play'),
 
   /// Mother Earth
   ProjectModel(
@@ -100,7 +100,11 @@ Find your Spark. Find your friends. Find yourself.''',
     )),
     demoUrl: 'https://whisper-demo.netlify.app/',
     bgColor: MyPalette.greyWhite,
-    credentials: const ['milesnext@gmail.com', '123456'],
+    demoNotes: '''
+Username: milesnext@gmail.com
+Password: 123456
+Enable location to play
+    ''',
   ),
 
   /// Baseball Classic

@@ -15,7 +15,7 @@ class ProjectModel {
   final String? demoUrl;
   final Color bgColor;
   final bool? isDarkTheme;
-  final List<String>? credentials;
+  final String? demoNotes;
 
   const ProjectModel({
     required this.name,
@@ -29,6 +29,6 @@ class ProjectModel {
     this.demoUrl,
     required this.bgColor,
     this.isDarkTheme = false,
-    this.credentials,
+    this.demoNotes,
   });
 }
