@@ -6,23 +6,27 @@ import 'package:flutter/material.dart';
 class ProjectModel {
   final String name;
   final String subtitle;
-  final int imageCount;
+  final Map<String, int> imageMeta;
   final ProjectType type;
   final String description;
-  final List<String> features;
+  final List<String>? features;
   final List<TechStack> techStack;
   final TextStyle textStyle;
   final String? demoUrl;
+  final Color bgColor;
+  final bool? isDarkTheme;
 
   const ProjectModel({
     required this.name,
     required this.subtitle,
-    required this.imageCount,
+    required this.imageMeta,
     required this.type,
     required this.description,
-    required this.features,
+    this.features,
     required this.techStack,
     required this.textStyle,
     this.demoUrl,
+    required this.bgColor,
+    this.isDarkTheme = false,
   });
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 enum ProjectType {
   proofOfConcept('PROOF OF CONCEPT', MyPalette.grey),
-  inProgress('In Progress', MyPalette.green),
-  production('Production', MyPalette.blue);
+  inProgress('IN PROGRESS', MyPalette.orange),
+  production('PRODUCTION', MyPalette.black);
 
   final String displayName;
   final Color bgColor;

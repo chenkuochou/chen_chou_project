@@ -1,4 +1,5 @@
 import 'package:chen_chou_project/common/constant/my_palette.dart';
+import 'package:chen_chou_project/data/source/projects.dart';
 import 'package:chen_chou_project/view/footer.dart';
 import 'package:chen_chou_project/view/widget/section.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final int currentSection = {
       'Rustland': 0,
-      'Mother Earth': 1,
-      'whisper': 2,
+      'MotherEarth': 1,
+      'Whisper': 2,
       'Baseball': 3,
       'Footer': 4,
-    }['Rustland']!;
+    }['Whisper']!;
 
     return Scaffold(
       backgroundColor: MyPalette.black,
@@ -25,19 +26,8 @@ class HomePage extends StatelessWidget {
             initialPage: currentSection,
           ),
           children: [
-            const Section(),
-            Container(
-              color: Colors.green,
-            ),
-            Container(
-              color: Colors.blue,
-            ),
-            Container(
-              color: Colors.purple,
-            ),
-            Container(
-              color: Colors.orange,
-            ),
+            for (int i = 0; i < projects.length; i++)
+              Section(projects[i]),
             const Footer(),
           ],
         ),
