@@ -1,6 +1,6 @@
 name: chen_chou_project
-description: "A new Flutter project."
-publish_to: "none"
+description: "Demo of Chen Chou"
+# publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -11,6 +11,7 @@ dependencies:
   dots_indicator: ^3.0.0
   flutter:
     sdk: flutter
+  flutter_hooks: ^0.20.5
   google_fonts: ^6.2.1
   url_launcher: ^6.2.5
 
