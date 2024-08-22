@@ -1,3 +1,4 @@
+import 'package:chen_chou_project/data/text_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -6,81 +7,114 @@ class Home extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    // final textSize = useState(20.0);
-    final textColor = useState(Colors.black);
-    final ValueNotifier<double> scrollingPosition = useState(0.0);
+    final size = MediaQuery.of(context).size;
+    final pageHeight = size.height;
 
-    final ScrollController scrollController = useScrollController();
+    final blackColor = useState<Color>(Colors.black);
+    final greyColor = useState<Color>(Colors.grey);
+    final textWidget =
+        useState<Widget>(buildTitles(blackColor.value, greyColor.value)[0]);
+    final scrollController = useScrollController();
+
     useEffect(() {
       scrollController.addListener(() {
-        // textSize.value = 20.0 - scrollController.offset * 0.05;
-        // if (textSize.value < 12.0) textSize.value = 12.0;
-        double colorValue =
-            (scrollController.offset / size.height * 2) * 255 - 3;
-        if (colorValue > 255) {
-          colorValue = colorValue % 255;
+        double pageFold = scrollController.offset / pageHeight;
+        // print('$pageFold ${scrollController.offset} $pageHeight');
+
+        List<Widget> list = buildTitles(blackColor.value, greyColor.value);
+        Color getColor(double pageFoldMin, double pageFoldMax,
+            [bool isBlack = true]) {
+          final double ratio =
+              ((scrollController.offset - pageHeight * pageFoldMin) /
+                      pageHeight *
+                      (pageFoldMax - pageFoldMin))
+                  .clamp(0.0, 1.0);
+          return ratio <= 0.5
+              ? Color.lerp(Theme.of(context).scaffoldBackgroundColor,
+                  isBlack ? Colors.black : Colors.grey, ratio * 2)!
+              : Color.lerp(
+                  isBlack ? Colors.black : Colors.grey,
+                  Theme.of(context).scaffoldBackgroundColor,
+                  (ratio - 0.5) * 2)!;
         }
-        if (colorValue < 3) {
-          colorValue = (scrollController.offset / size.height * 2) * 255;
+
+        if (pageFold < 1) {
+          final ratio = (scrollController.offset / pageHeight).clamp(0.0, 1.0);
+          blackColor.value = Color.lerp(
+              Colors.black,
+              Theme.of(context).scaffoldBackgroundColor,
+              ratio.clamp(0.0, 1.0))!;
+          greyColor.value = Color.lerp(
+              Colors.grey,
+              Theme.of(context).scaffoldBackgroundColor,
+              ratio.clamp(0.0, 1.0))!;
+          textWidget.value = list[0];
+        } else if (pageFold > 1.35 && pageFold < 2.5) {
+          blackColor.value = getColor(1.35, 2.3);
+          greyColor.value = getColor(1.35, 2.3, false);
+          textWidget.value = list[1];
+        } else if (pageFold > 2.85 && pageFold < 4) {
+          blackColor.value = getColor(2.85, 3.8);
+          greyColor.value = getColor(2.85, 3.8, false);
+          textWidget.value = list[2];
+        } else if (pageFold > 4.35 && pageFold < 5.5) {
+          blackColor.value = getColor(4.35, 5.3);
+          greyColor.value = getColor(4.35, 5.3, false);
+          textWidget.value = list[3];
+        } else if (pageFold > 5.85 && pageFold < 7) {
+          blackColor.value = getColor(5.85, 6.8);
+          greyColor.value = getColor(5.85, 6.8, false);
+          textWidget.value = list[4];
+        } else if (pageFold > 7.35) {
+          blackColor.value = getColor(7.35, 8.2);
+          greyColor.value = getColor(7.35, 8.2, false);
+          textWidget.value = list[5];
+        } else {
+          blackColor.value = Theme.of(context).scaffoldBackgroundColor;
+          greyColor.value = Theme.of(context).scaffoldBackgroundColor;
+          textWidget.value = const SizedBox.shrink();
         }
-        textColor.value = Color.fromARGB(
-            255, colorValue.toInt(), colorValue.toInt(), colorValue.toInt());
-        scrollingPosition.value = scrollController.offset;
       });
-      return null;
+      return () => scrollController.dispose();
     }, [scrollController]);
 
-    final List<String> titles = ['asdasd', '22fuehuw', '', '44', ''];
-    const Color color = Color(0xffF2F0EC);
-
-    Widget halfHighSizeBox() => SizedBox(
-          width: size.width,
-          height: size.height / 2,
-        );
-
-    Widget imageRow(double topPadding) => Padding(
-          padding: EdgeInsets.only(top: topPadding),
-          child: Center(
+    Widget imageRow(List<String> picUrl, [double topPadding = 0]) => Padding(
+        padding: EdgeInsets.only(top: topPadding),
+        child: Center(
             child: Container(
-              color: color,
-              width: size.width,
-              height: size.height,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: const Row(
-                children: [
-                  Image(
-                    image: AssetImage('assets/img/whisper7-portrait.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+                color: Colors.transparent,
+                width: size.width,
+                height: pageHeight,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: picUrl
+                      .map((e) => SizedBox(
+                          width: (size.width - 40) / 3,
+                          child: Image.asset('assets/img/$e.png',
+                              fit: BoxFit.contain)))
+                      .toList(),
+                ))));
 
     return Scaffold(
       body: Stack(
         children: [
           Center(
-            child: Text(
-              // scrollingPosition.value.toString(),
-              titles[(scrollingPosition.value / size.height).toInt()],
-              style: TextStyle(
-                // fontSize: textSize.value,
-                color: textColor.value,
-              ),
-            ),
+            child: textWidget.value,
           ),
           SingleChildScrollView(
             controller: scrollController,
             child: Column(
               children: [
-                imageRow(size.height),
-                halfHighSizeBox(),
-                imageRow(0),
-                halfHighSizeBox(),
-                imageRow(0),
+                imageRow(['mot3', 'rus1', 'whi1'], pageHeight),
+                SizedBox(width: size.width, height: pageHeight / 2),
+                imageRow(['rus1', 'rus2', 'rus3']),
+                SizedBox(width: size.width, height: pageHeight / 2),
+                imageRow(['mot2', 'mot4', 'mot9']),
+                SizedBox(width: size.width, height: pageHeight / 2),
+                imageRow(['bas1', 'bas3', 'bas4']),
+                SizedBox(width: size.width, height: pageHeight / 2),
+                imageRow(['whi2', 'whi3', 'whi4']),
+                SizedBox(width: size.width, height: pageHeight)
               ],
             ),
           ),
