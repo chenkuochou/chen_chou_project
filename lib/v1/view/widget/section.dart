@@ -14,12 +14,12 @@ class Section extends StatefulWidget {
 }
 
 class _SectionState extends State<Section> {
-  late CarouselController carouselController;
+  late CarouselSliderController carouselController;
   int currentIndex = 0;
 
   @override
   void initState() {
-    carouselController = CarouselController();
+    carouselController = CarouselSliderController();
     super.initState();
   }
 
