@@ -1,7 +1,7 @@
-import 'package:chen_chou_project/common/constant/my_palette.dart';
-import 'package:chen_chou_project/data/source/projects.dart';
-import 'package:chen_chou_project/view/footer.dart';
-import 'package:chen_chou_project/view/widget/section.dart';
+import 'package:chen_chou_project/v1/common/constant/my_palette.dart';
+import 'package:chen_chou_project/v1/data/source/projects.dart';
+import 'package:chen_chou_project/v1/view/footer.dart';
+import 'package:chen_chou_project/v1/view/widget/section.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

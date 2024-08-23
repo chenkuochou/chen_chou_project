@@ -1,5 +1,4 @@
-import 'package:chen_chou_project/view/home.dart';
-import 'package:chen_chou_project/view/home_page.dart';
+import 'package:chen_chou_project/home.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {

@@ -1,5 +1,5 @@
-import 'package:chen_chou_project/common/constant/my_palette.dart';
-import 'package:chen_chou_project/data/data.dart';
+import 'package:chen_chou_project/v1/common/constant/my_palette.dart';
+import 'package:chen_chou_project/v1/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

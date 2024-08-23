@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:chen_chou_project/common/common.dart';
-import 'package:chen_chou_project/data/data.dart';
+import 'package:chen_chou_project/v1/common/common.dart';
+import 'package:chen_chou_project/v1/data/data.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

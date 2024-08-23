@@ -1,5 +1,5 @@
-import 'package:chen_chou_project/data/model/enum/project_type.dart';
-import 'package:chen_chou_project/data/model/enum/tech_stack.dart';
+import 'package:chen_chou_project/v1/data/model/enum/project_type.dart';
+import 'package:chen_chou_project/v1/data/model/enum/tech_stack.dart';
 import 'package:flutter/material.dart';
 
 @immutable
