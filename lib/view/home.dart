@@ -17,65 +17,57 @@ class Home extends HookWidget {
     final scrollController = useScrollController();
 
     useEffect(() {
-      scrollController.addListener(() {
-        double pageFold = scrollController.offset / pageHeight;
-        // print('$pageFold ${scrollController.offset} $pageHeight');
+      final ranges = [
+        [0.0, 1.0],
+        [1.35, 2.3],
+        [2.85, 3.8],
+        [4.35, 5.3],
+        [5.85, 6.8],
+        [7.35, 8.2],
+      ];
 
-        List<Widget> list = buildTitles(blackColor.value, greyColor.value);
-        Color getColor(double pageFoldMin, double pageFoldMax,
-            [bool isBlack = true]) {
-          final double ratio =
-              ((scrollController.offset - pageHeight * pageFoldMin) /
-                      pageHeight *
-                      (pageFoldMax - pageFoldMin))
-                  .clamp(0.0, 1.0);
-          return ratio <= 0.5
-              ? Color.lerp(Theme.of(context).scaffoldBackgroundColor,
-                  isBlack ? Colors.black : Colors.grey, ratio * 2)!
-              : Color.lerp(
-                  isBlack ? Colors.black : Colors.grey,
-                  Theme.of(context).scaffoldBackgroundColor,
-                  (ratio - 0.5) * 2)!;
-        }
-
-        if (pageFold < 1) {
-          final ratio = (scrollController.offset / pageHeight).clamp(0.0, 1.0);
+      void updateColorsAndWidget(int index, double pageFold) {
+        if (index == 0) {
+          final ratio = pageFold.clamp(0.0, 1.0);
           blackColor.value = Color.lerp(
-              Colors.black,
-              Theme.of(context).scaffoldBackgroundColor,
-              ratio.clamp(0.0, 1.0))!;
+              Colors.black, Theme.of(context).scaffoldBackgroundColor, ratio)!;
           greyColor.value = Color.lerp(
-              Colors.grey,
-              Theme.of(context).scaffoldBackgroundColor,
-              ratio.clamp(0.0, 1.0))!;
-          textWidget.value = list[0];
-        } else if (pageFold > 1.35 && pageFold < 2.5) {
-          blackColor.value = getColor(1.35, 2.3);
-          greyColor.value = getColor(1.35, 2.3, false);
-          textWidget.value = list[1];
-        } else if (pageFold > 2.85 && pageFold < 4) {
-          blackColor.value = getColor(2.85, 3.8);
-          greyColor.value = getColor(2.85, 3.8, false);
-          textWidget.value = list[2];
-        } else if (pageFold > 4.35 && pageFold < 5.5) {
-          blackColor.value = getColor(4.35, 5.3);
-          greyColor.value = getColor(4.35, 5.3, false);
-          textWidget.value = list[3];
-        } else if (pageFold > 5.85 && pageFold < 7) {
-          blackColor.value = getColor(5.85, 6.8);
-          greyColor.value = getColor(5.85, 6.8, false);
-          textWidget.value = list[4];
-        } else if (pageFold > 7.35) {
-          blackColor.value = getColor(7.35, 8.2);
-          greyColor.value = getColor(7.35, 8.2, false);
-          textWidget.value = list[5];
+              Colors.grey, Theme.of(context).scaffoldBackgroundColor, ratio)!;
         } else {
-          blackColor.value = Theme.of(context).scaffoldBackgroundColor;
-          greyColor.value = Theme.of(context).scaffoldBackgroundColor;
+          final min = ranges[index][0];
+          final max = ranges[index][1];
+          final ratio = ((scrollController.offset - pageHeight * min) /
+                  pageHeight *
+                  (max - min))
+              .clamp(0.0, 1.0);
+          lerpColor(bool isBlack) => Color.lerp(
+              Theme.of(context).scaffoldBackgroundColor,
+              isBlack ? Colors.black : Colors.grey,
+              (ratio <= 0.5 ? ratio : 1 - ratio) * 2)!;
+
+          blackColor.value = lerpColor(true);
+          greyColor.value = lerpColor(false);
+        }
+        textWidget.value =
+            buildTitles(blackColor.value, greyColor.value)[index];
+      }
+
+      scrollController.addListener(() {
+        final pageFold = scrollController.offset / pageHeight;
+
+        final index = ranges
+            .indexWhere((range) => pageFold >= range[0] && pageFold < range[1]);
+
+        if (index == -1) {
+          blackColor.value =
+              greyColor.value = Theme.of(context).scaffoldBackgroundColor;
           textWidget.value = const SizedBox.shrink();
+        } else {
+          updateColorsAndWidget(index, pageFold);
         }
       });
-      return () => scrollController.dispose();
+
+      return scrollController.dispose;
     }, [scrollController]);
 
     Widget imageRow(List<String> picUrl, [double topPadding = 0]) => Padding(
